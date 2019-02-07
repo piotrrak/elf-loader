@@ -11,8 +11,8 @@ dlopen libh.so completed
 special destructor in libh.so
 called function_g in libg
 dlclose libg.so completed
-libf destructor
 libg destructor
+libf destructor
 special destructor in libh.so
 called function_g in libg
 libh destructor

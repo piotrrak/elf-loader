@@ -6,11 +6,12 @@ srcdir=$2
 mkdir -p output 2>/dev/null
 
 cp ${testn} ${testn}-ldso
-../elfedit ${testn}-ldso ../ldso
+@PATCHELF_PROG@ --set-interpreter ../ldso ${testn}-ldso|| exit 1
 
 echo "running 'LD_LIBRARY_PATH=.:../ ./${testn}-ldso > output/${testn}'"
-LD_LIBRARY_PATH=.:../ ./${testn}-ldso > output/${testn} 2> /dev/null || true;
+LD_LIBRARY_PATH=.:../ stdbuf -o0 ./${testn}-ldso > output/${testn} 2> /dev/null || true;
 
+rm -f ${testn}.diff > /dev/null
 diff -q output/${testn} ${srcdir}/output/${testn}.ref > /dev/null
 
 if test $? -eq 0; then
@@ -18,6 +19,7 @@ if test $? -eq 0; then
     exit 0
 else
     echo "***** FAIL ${testn} *****"
+    diff output/${testn} ${srcdir}/output/${testn}.ref > output/${testn}.diff
     exit 1
 fi
 

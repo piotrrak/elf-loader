@@ -1,6 +1,6 @@
 libtest12 constructor
 dlopen failed
-dlopen failed: Unable to load "./libl.so": Could not find ./libl.so
+dlopen failed: ./libl.so: cannot open shared object file: No such file or directory
 error cleared
-main error: "Unable to load "./libj.so": Could not find libl.so"
+main error: "libl.so: cannot open shared object file: No such file or directory"
 libtest12 destructor

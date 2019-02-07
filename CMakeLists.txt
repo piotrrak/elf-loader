@@ -11,6 +11,8 @@ endmacro(add_cflags)
 add_definitions(-DMALLOC_DEBUG_ENABLE)
 add_definitions(-D_GNU_SOURCE)
 add_definitions(-DLDSO_SONAME=\"ldso\")
+add_definitions(-DDEBUG)
+add_definitions(-fno-gnu-unique)
 
 if(LOADER_VALGRIND STREQUAL ON)
   add_definitions(-DHAVE_VALGRIND_H)
@@ -88,7 +90,6 @@ set(ldso_srcs
     avprintf-cb.c
 #    display-relocs.c
     dprintf.c
-#    elfedit.c
     futex.c
     gdb.c
     glibc.c
@@ -122,9 +123,7 @@ set(ldso_srcs
     vdl-utils.c
 )
 
-
 add_executable(readversiondef readversiondef.c)
-
 
 add_custom_command(OUTPUT vdl-config.h
   COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/extract-system-config.py --config=vdl-config.h --builddir=${CMAKE_INSTALL_PREFIX}/lib
@@ -175,12 +174,11 @@ set_target_properties(vdl PROPERTIES
 )
 
 
-add_executable(elfedit elfedit.c)
 add_executable(display-relocs display-relocs.c)
 
 
-add_custom_target(elf-loader DEPENDS ldso vdl elfedit display-relocs)
-install(TARGETS elfedit display-relocs DESTINATION bin)
+add_custom_target(elf-loader DEPENDS ldso vdl display-relocs)
+install(TARGETS display-relocs DESTINATION bin)
 install(TARGETS ldso vdl
         DESTINATION lib
         PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ

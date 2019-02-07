@@ -7,8 +7,8 @@ dlopen libg.so completed
 dlclose libg.so completed
 libg destructor
 special destructor in libh.so
-called function_g in libg
-libh destructor
 dlclose libg.so completed
 leave main
 libtest8 destructor
+libg destructor
+special destructor in libh.so
