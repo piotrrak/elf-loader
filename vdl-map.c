@@ -283,12 +283,6 @@ get_file_info (uint32_t phnum, ElfW (Phdr) *phdr,
         {
           struct VdlFileMap *map = pt_load_to_file_map (cur);
           vdl_list_push_back (maps, map);
-          if (align != 0 && cur->p_align != align)
-            {
-              VDL_LOG_ERROR ("Invalid alignment constraints\n");
-              goto error;
-            }
-          align = cur->p_align;
         }
       else if (cur->p_type == PT_DYNAMIC)
         {
